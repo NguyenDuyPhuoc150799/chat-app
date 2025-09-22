@@ -1,18 +1,31 @@
-import { Button, createTheme, CssBaseline, ThemeProvider } from '@mui/material'
-const theme = createTheme({
-  typography: {
-    fontFamily: 'Poppins, Arial'
-  }
-})
-console.log(theme)
+import { BrowserRouter, Route, Routes } from 'react-router'
+import ChatRoom from './components/ChatRoom'
+import Login from './components/Login'
+import AddRoomModal from './components/Modals/AddRoomModal'
+import InviteModal from './components/Modals/InviteModal'
+import { AppProvider } from './context/AppProvider'
+import { AuthProvider } from './context/AuthProvider'
+import InviteProvider from './context/InviteProvider'
+import RoomsProvider from './context/RoomsProvider'
+
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Button variant='contained' color='primary'>
-        Hello World
-      </Button>
-    </ThemeProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <AppProvider>
+          <Routes>
+            <Route path='/login' element={<Login />} />
+            <Route path='/' element={<ChatRoom />} />
+          </Routes>
+          <RoomsProvider>
+            <AddRoomModal />
+          </RoomsProvider>
+          <InviteProvider>
+            <InviteModal />
+          </InviteProvider>
+        </AppProvider>
+      </AuthProvider>
+    </BrowserRouter>
   )
 }
 
